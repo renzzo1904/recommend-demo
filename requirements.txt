@@ -1,0 +1,9 @@
+pandas 
+bs4 
+pylint
+sentence_transformers~=2.2.2
+torch
+scikit-learn 
+fastapi
+uvicorn
+python-multipart
