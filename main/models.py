@@ -14,6 +14,7 @@ def average_pool(last_hidden_states: Tensor, attention_mask: Tensor) -> Tensor:
 
 
 class ModelClass:
+
     def __init__(self):
         self.tokenizer = AutoTokenizer.from_pretrained("intfloat/multilingual-e5-base")
         self.embeddings_model = AutoModel.from_pretrained(

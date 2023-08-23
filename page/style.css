@@ -1,155 +1,27 @@
-@font-face {
-    font-family: 'UnderStrukk';
-    src: url('UnderStrukk.woff2') format('woff2'),
-        url('UnderStrukk.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
-    font-display: swap;
-}
 
-
-body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    background-color: #f4f4f4;
-}
-
-.hidden-text {
-    position: absolute;
-    left: -9999px;
-    top: auto;
-    width: 1px;
-    height: 1px;
-    overflow: hidden;
-}
-
-.catalog {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 20px;
-}
-
-
-.obj {
-    text-align: center;
-    margin: 20px;
-    padding: 20px;
-    border: 1px solid #014067;
-    background-color: #fff;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    position: relative; /* Add this line */
-    z-index: 1; /* Add this line */
-}
-
+/* Style for the images */
 .obj img {
     max-width: 100%;
     height: auto;
     transition: transform 0.3s ease;
-    border: 5px solid #000000; /* Add a frame effect */
-}
-
-.obj:hover {
-    z-index: 2; /* Bring the hovered object to the front */
+    border: 2px solid #ff0000; /* Add border to the images */
 }
 
 .obj:hover img {
     transform: scale(1.1);
 }
 
-
-
-.buy-button {
+/* Style for the buttons */
+.button {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
     margin-top: 10px;
-    padding: 5px 10px;
-    background-color: #007bff;
-    color: #fff;
-    border: none;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
 }
 
-.buy-button:hover {
-    background-color: #0056b3;
-}
-
-.banner {
-    top: 0;
-    left: 0;
-    width: 100%;
-    background-color: #87CEEB;
-    text-align: center;
-    padding: 20px;
-    opacity: 0;
-    animation: fadeIn 1s ease-out forwards;
-    font-family: 'UnderStrukk', sans-serif;
-    z-index: 3;
-}
-
-/* Keyframes for the fade-in animation */
-@keyframes fadeIn {
-    to {
-        opacity: 1;
-    }
-}
-
-.about,
-.contact {
-    padding: 40px;
-    background-color: #fff;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    margin: 20px 0;
-}
-
-.contact {
-    background-color: #f8f8f8;
-}
-
-
-.menu {
-    background-color: #333;
-    color: #fff;
-    text-align: left;
-    padding: 10px 0;
-    font-family: 'UnderStrukk', sans-serif
-}
-
-.menu ul {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-}
-
-.menu li {
-    display: inline-block;
-    margin: 0 10px;
-}
-
-.menu a {
-    text-decoration: none;
-    color: #fff;
-}
-
-.search {
-    display: flex;
-    align-items: right;
-    margin-left: auto;
-}
-
-.search input[type="text"] {
-    padding: 5px;
-}
-
-.search-button {
-    background-color: #007bff;
-    color: #fff;
-    border: none;
-    padding: 5px 10px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
-
-.search-button:hover {
+.button:hover {
     background-color: #0056b3;
 }

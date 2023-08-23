@@ -1,48 +1,65 @@
-from fastapi import FastAPI,Form
-from fastapi.staticfiles import StaticFiles
-import uvicorn 
-
-from helpers.helper_functions import *
+import gradio as gr
 from main.models import ModelClass
+from helpers.helper_functions import *
+import pandas as pd
 
-model = ModelClass()
+css_path = "page/style.css"
+intro_html = "page/intro.html"
 
-api_app = FastAPI(title="api app")
-app = FastAPI(title="main app")
+with open(intro_html, "r") as file:
+    html_content = file.read()
 
-app.mount("/", StaticFiles(directory="page", html=True), name="index")
+with gr.Blocks(css=css_path) as demo:
+    with gr.Row():
+        df_gr = gr.Dataframe(pd.read_csv("examples/mini_df.csv"))
+        html_intro = gr.HTML(value=html_content)
 
-@app.get("/get_likes")
-async def get_likes(
-    element_content: str = Form(...),
-    alt_text: str = Form(...),
-    hidden_text: str = Form(...)
-):
-    # Process the received data
-    # You can store it in a database, analyze it, etc.
-    # For demonstration, we'll just return the received data
-    data = {
-        "Element Content": element_content,
-        "Alt Text": alt_text,
-        "Hidden Text": hidden_text
-    }
-    
-    return data
+    with gr.Row():
+        img_kwargs = {
+            "container": True,
+            "show_download_button": False,
+            "scale": 1,
+            "show_label": False,
+        }
 
-@app.post("/perform_ml_prediction")
-async def perform_ml_prediction():
-    # Call the /get_likes endpoint to retrieve data
-    response = await get_likes()
-    data = response.json()
-    
-    # Perform your machine learning prediction using the retrieved data
-    prediction_result = model.create_embeddings(data)
-    
-    # Combine the original data with the prediction result
-    #ml_result = model.perform_clustering(prediction_result)
-    
-    return prediction_result
+        im1 = gr.Image("page/skate.jpeg", **img_kwargs)
+        im2 = gr.Image("page/ball.jpeg", **img_kwargs)
+        im3 = gr.Image("page/globe.jpeg", **img_kwargs)
+
+    with gr.Row():
+        txt_kwargs = {
+            "max_lines": 10,
+            "interactive": False,
+            "show_label": False,
+            "container": False,
+        }
+
+        txt1 = gr.Textbox(
+            value="skateboard punk skate vans skating cool board", **txt_kwargs
+        )
+        txt2 = gr.Textbox(
+            value="football soccer ball sports toy worldcup", **txt_kwargs
+        )
+        txt3 = gr.Textbox(
+            value="globe world geogrpahy class country continent", **txt_kwargs
+        )
+
+    with gr.Row():
+        bt1 = gr.Button("Recommend based on this", elem_id="button ")
+        bt2 = gr.Button("Recommend based on this", elem_id="button")
+        bt3 = gr.Button("Recommend based on this", elem_id="button")
+
+    html = gr.HTML(value="Hello World")
+
+    # model = ModelClass()
+
+    def get_predictions(user_likes):
+        pass
+
+    bt1.click(get_predictions, inputs=txt1, outputs=html)
+    bt2.click(get_predictions, inputs=txt2, outputs=html)
+    bt3.click(get_predictions, inputs=txt3, outputs=html)
 
 
 if __name__ == "__main__":
-    uvicorn.run(app,port=8080,host='0.0.0.0')
+    demo.launch(server_port=8080)
