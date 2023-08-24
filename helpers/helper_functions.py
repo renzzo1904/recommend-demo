@@ -23,9 +23,10 @@ def generate_inventory(your_df, tag_column: str = "tags", separator: str = ","):
     inv = {}
 
     for tags in your_df[tag_column]:
-        if type(tags) != float: 
+        if type(tags) != float:
             tag_list = tags.split(separator)
-        else: continue 
+        else:
+            continue
         for tag in tag_list:
             tag = tag.strip()  # Remove leading/trailing spaces
             if tag and not tag.isnumeric():  # Skip numeric tags
@@ -51,7 +52,7 @@ def create_profiles(
     Returns:
         DataFrame: A DataFrame containing user profile information.
     """
-    
+
     # Group by user_id and concatenate the products into a single row
     user_profiles = (
         your_df.groupby(user_idex_column)[tag_column]
@@ -63,6 +64,7 @@ def create_profiles(
     )
 
     return user_profiles
+
 
 ################################################################################################
 
