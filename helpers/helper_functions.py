@@ -7,14 +7,14 @@ Helper Functions --------------------------------
 ################################################################################################
 
 
-def generate_inventory(your_df, tag_column: str = "tags", separator: str = " "):
+def generate_inventory(your_df, tag_column: str = "tags", separator: str = ","):
     """
     Helper function that creates a master inventory for all the products in historical DataFrame.
 
     Args:
         df (DataFrame): The historical DataFrame containing product information.
-        tag_column (str,optional) -- default:'tags' -- : The name of the column containing product tags.
-        separator (str, optional) -- default:' " " ' -- : The separator used to split tags. Default is a space.
+        tag_column (str, optional): The name of the column containing product tags. Default is 'tags'.
+        separator (str, optional): The separator used to split tags. Default is a comma.
 
     Returns:
         dict: A dictionary representing the product inventory with tag counts.
@@ -23,10 +23,12 @@ def generate_inventory(your_df, tag_column: str = "tags", separator: str = " "):
     inv = {}
 
     for tags in your_df[tag_column]:
-        tag_list = tags.split(separator)
+        if type(tags) != float: 
+            tag_list = tags.split(separator)
+        else: continue 
         for tag in tag_list:
             tag = tag.strip()  # Remove leading/trailing spaces
-            if tag:
+            if tag and not tag.isnumeric():  # Skip numeric tags
                 inv[tag] = inv.get(tag, 0) + 1  # Increment tag count
 
     return inv
@@ -49,10 +51,11 @@ def create_profiles(
     Returns:
         DataFrame: A DataFrame containing user profile information.
     """
+    
     # Group by user_id and concatenate the products into a single row
     user_profiles = (
         your_df.groupby(user_idex_column)[tag_column]
-        .apply(lambda x: " ".join(x))
+        .apply(lambda x: ",".join(x))
         .reset_index()
     )
     user_profiles.rename(
@@ -60,7 +63,6 @@ def create_profiles(
     )
 
     return user_profiles
-
 
 ################################################################################################
 

@@ -9,3 +9,4 @@ uvicorn
 python-multipart
 pydantic
 gradio
+tables git+https://github.com/PyTables/PyTables
