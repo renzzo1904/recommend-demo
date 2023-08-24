@@ -5,7 +5,7 @@ import pandas as pd
 import numpy as np
 import random 
 
-from sklearn.cluster import DBSCAN
+from sklearn.cluster import DBSCAN,KMeans
 from sklearn.preprocessing import StandardScaler
 
 from main.models import ModelClass
@@ -102,7 +102,6 @@ class UI:
         min_samples = 5  # The number of samples (or total weight) in a neighborhood for a point to be considered as a core point
         dbscan = DBSCAN(eps=eps, min_samples=min_samples)
 
-
         features = self.model.create_embeddings(user_likes) # createthe embeddings 
         new_point_df = pd.DataFrame({"Embeddings": [features]})
         df = pd.concat([df, new_point_df], axis=0, ignore_index=True)
@@ -119,7 +118,21 @@ class UI:
             
             result= generate_inventory(df[df.cluster==point_label].sample(n=5,random_state=random.randint(0,40)),'likes',',')
         
-        else: return '<h2>UNIQUE CUSTOMER !</h2>' 
+        else: 
+            
+            # There is too much sparsity to assign a cluster. Therefore we do classic Kmeans clustering
+
+            kmeans = KMeans(n_clusters=10,random_state=23)
+
+            df = df.iloc[:-1] # Remove new_point from fitting 
+
+            kmeans.fit(np.concatenate(df.Embeddings))            
+            
+            df['cluster'] = kmeans.labels_
+
+            point_label = kmeans.predict(features)[0]
+
+            result= generate_inventory(df[df.cluster==point_label].sample(n=5,random_state=random.randint(0,40)),'likes',',')
 
         # Create the HTML text as a table
         html_text = "<h2>We think you may like based on people like you!</h2>"
