@@ -1,6 +1,6 @@
 # recommend-demo
 
-## Simple Recommendation System with DBSCAN
+## Simple Recommendation System with DBSCAN/KMEANS
 
 ### Introduction
 
