@@ -54,7 +54,7 @@ class UI:
                     "show_download_button": False,
                     "scale": 1,
                     "show_label": False,
-                    "shape":(512,512)
+                    "shape":(256,256)
                 }
 
                 im1 = gr.Image("page/flashlight.jpeg", **img_kwargs)
