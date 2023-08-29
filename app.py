@@ -142,6 +142,7 @@ class UI:
             )
 
         else:
+
             # There is too much sparsity to assign a cluster. Therefore we do classic Kmeans clustering
 
             kmeans = KMeans(n_clusters=10, n_init="auto", random_state=23)
@@ -212,6 +213,7 @@ class UI:
 
         return html_table
 
+    
 
 if __name__ == "__main__":
     ui = UI()
