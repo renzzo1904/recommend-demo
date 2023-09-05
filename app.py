@@ -46,7 +46,7 @@ class UI:
                         "col_count": (9, "fixed"),
                     }
 
-                    gr.Dataframe(self.min_df, **df_kwargs)
+                    gr.Dataframe(self.min_df, **df_kwargs) # type: ignore
 
             with gr.Row():
                 img_kwargs = {
@@ -88,7 +88,7 @@ class UI:
                     )
                     with gr.Row():
                         txt_button = gr.Button("Submit")
-                        clear_button = gr.ClearButton()
+                        clear_button = gr.ClearButton() # type: ignore
                     html2 = gr.HTML(value="")
 
             clear_button.add(txt_box)
@@ -122,7 +122,7 @@ class UI:
 
         features = self.model.create_embeddings(user_likes)  # createthe embeddings
         new_point_df = pd.DataFrame({"Embeddings": [features]})
-        df = pd.concat([df, new_point_df], axis=0, ignore_index=True)
+        df = pd.concat([df, new_point_df], axis=0, ignore_index=True) # type: ignore
 
         scaler = StandardScaler()
 
@@ -184,7 +184,7 @@ class UI:
         features = self.model.create_embeddings(user_likes)
 
         # Calculate Euclidean distances and add a new column "Distance" to the DataFrame
-        embeddings_array = np.stack(df["Embeddings"].to_numpy())
+        embeddings_array = np.stack(df["Embeddings"].to_numpy()) # type: ignore
         # reduced_embeddings_array = pca.transform(embeddings_array)  # Apply PCA to embeddings
         distances = np.linalg.norm(embeddings_array - features, axis=2)
         df["Distance"] = distances
@@ -195,7 +195,7 @@ class UI:
         df["similarity"] = similarities
 
         # Sort the DataFrame based on the "Distance" column
-        sorted_df = df.sort_values(by="Distance")
+        sorted_df = df.sort_values(by="Distance") # type: ignore
 
         # Drop duplicates based on the "Description" column
         sorted_df = sorted_df.drop_duplicates(subset="Description")
