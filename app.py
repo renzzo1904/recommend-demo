@@ -20,9 +20,10 @@ with open(intro_html, "r") as file:
 
 class UI:
     def __init__(self) -> None:
-        self.min_df = pd.read_csv("examples/mini_df.csv")
-        self.users_df = pd.read_hdf("examples/users.h5", key="df_key")
-        self.df = pd.read_hdf("examples/data.h5", key="df_key")
+        base_path = "examples/other_data/"
+        self.min_df = pd.read_csv(base_path+"mini_df.csv")
+        self.users_df = pd.read_hdf(base_path+"users.h5", key="df_key")
+        self.df = pd.read_hdf(base_path+"data.h5", key="df_key")
         self.model = ModelClass()
 
     def create_ui(self):
